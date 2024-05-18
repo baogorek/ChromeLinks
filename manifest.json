@@ -11,7 +11,20 @@
       "128": "images/icon128.png"
     }
   },
-  "permissions": ["storage", "tabs"],
+  "commands": {
+    "save-url": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+8",
+        "mac": "Command+Shift+8"
+      },
+      "description": "Save current URL as a TextLinks shortcut"
+    }
+  },
+  "permissions": [
+      "storage",
+       "tabs",
+       "activeTab" 
+  ],
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
@@ -20,6 +33,12 @@
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
   "omnibox": {
     "keyword": "go"
   }

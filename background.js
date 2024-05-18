@@ -6,18 +6,19 @@ function formatUrl(url) {
   return url;
 }
 
-//chrome.omnibox.onInputChanged.addListener((text, suggest) => {
-//  chrome.storage.sync.get(null, function(items) {
-//    const lowerCaseText = text.toLowerCase();
-//    const suggestions = Object.keys(items)
-//      .filter(key => key.toLowerCase().includes(lowerCaseText))
-//      .map(key => {
-//        return { content: key, description: key };
-//      });
-//
-//    suggest(suggestions);
-//  });
-//});
+// background.js
+chrome.commands.onCommand.addListener((command) => {
+  if (command === "save-url") {
+    console.log("hello!");
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const tab = tabs[0];
+      const url = tab.url;
+
+      chrome.tabs.sendMessage(tab.id, { action: "saveUrl", url: url });
+    });
+  }
+});
+
 
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   chrome.storage.sync.get(null, function(items) {
